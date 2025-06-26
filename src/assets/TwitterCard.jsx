@@ -9,7 +9,7 @@ const [follow, setFollow] = useState(true)
     return(
  <article className="flex items-center gap-4 w-full">
     
-    <img className="border rounded-full w-30 h-30 border border-black object-cover " src={url} alt="{description}" />
+    <img className="border rounded-full sm:w-20 sm:h-20  h-20 w-20 border border-black object-cover " src={url} alt="{description}" />
     
         <p className="flex flex-col overflow-hidden">
             <span className="text-white truncate">{user}</span>

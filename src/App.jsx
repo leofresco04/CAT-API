@@ -14,8 +14,7 @@ function App() {
     return recFav ? JSON.parse(recFav) : [];
   });
 
- 
-  const fetchData = async () => {
+const fetchData = async () => {
     try {
       const res = await fetch(api_url);
       const data = await res.json();
@@ -27,7 +26,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
+    useEffect(() => {
     fetchData();
     console.log("cat", cat);
   }, []);
@@ -75,37 +74,32 @@ function App() {
   //Retornamos y renderizamos
   return (
     <>
-      <section className="flex w-full h-screen bg-gray-950 p-6 gap-5 ">
-        <main className="flex flex-col items-center gap-8 flex-grow">
-          {isLoading && <p>cargando michis...</p>}
-          <h1 className="font-bold text-4xl text-white">MICHIS</h1>
-          <div className="flex flex-col flex-center items-center">
+     <section className="flex flex-col lg:flex-row justify-center items-center lg:items-start w-full min-h-screen bg-gray-950 p-6 gap-8">
+        
+            <main className="flex flex-col items-center gap-6 w-full lg:w-2/3" >
+          <h1 className="font-bold text-2xl md:text-4xl text-white">MICHIS</h1>
+<div className="flex flex-col justify-center items-center gap-3 w-full lg:w-100 bg-gray-900 p-4 rounded-2xl" >
+            {isLoading && <p className="text-white">cargando michis...</p>}
             <img
-              className="w-100 h-100 rounded-lg"
+              className="md:w-80 md:h-80 w-60 h-60  rounded-lg"
               src={cat.url}
               alt="gatito"
             />
-            <div className="flex justify-between w-100">
+            <div className="flex justify-between w-60 h-10 bg-blue-500 p-2 rounded-lg md:w-80 md:h-15">
               <button
-                className="flex justify-center p-3 bg-blue-500  h-auto hover:bg-blue-900 rounded-lg text-white"
+                className="flex items-center justify-center p-3 bg-blue-500  h-auto w-14 hover:bg-blue-900 rounded-lg text-white"
                 onClick={() => {
-                  if (view >= 10) {
-                    return alert("ya no podes ver más michis");
-                  } else {
-                    {
                       fetchData();
                       setView(view + 1);
-                    }
-                  }
                 }}
               >
                 <ArrowPathIcon className="w-10 h-10" />
               </button>
-              <p className="bg-blue-200 p-3 rounded-lg flex-grow flex justify-center items-center font-bold">
+              <p className="bg-blue-200 items-center text-sm p-4  rounded-lg flex-grow flex justify-center text-center font-bold mb-2">
                 michis vistos: {view}
               </p>
               <button
-                className="items-center flex justify-center p-3 bg-blue-500  h-auto hover:bg-blue-900 rounded-lg text-white"
+                className="items-center flex justify-center p-3 bg-blue-500  h-auto w-14 hover:bg-blue-900 rounded-lg text-white"
                 onClick={() => addFavorites(cat.id)}
               >
                 <BookmarkIcon className="w-10 h-10" />
@@ -114,7 +108,7 @@ function App() {
           </div>
         </main>
 
-        <div className="flex flex-col gap-5  p-6  h-100% bg-gray-950  border border-gray-800 w-90 rounded-2xl overflow-y-scroll ">
+        <div className="flex flex-col gap-5  p-6  h-100% bg-gray-950  border border-gray-800 w-90 rounded-2xl overflow-y-scroll max-h">
           <div className="flex justify-center">
             <h1 className="text-white font-bold">Favorites</h1>
           </div>
