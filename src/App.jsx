@@ -6,7 +6,7 @@ import { api_fav, api_key, api_url } from "./APIS";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 function App() {
-  const [view, setView] = useState(0);
+  const [view, setView] = useState(1);
   const [cat, setCat] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [favoritos, setFavoritos] = useState(() => {
