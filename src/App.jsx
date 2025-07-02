@@ -6,7 +6,10 @@ import { api_fav, api_key, api_url } from "./APIS";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 function App() {
-  const [view, setView] = useState(1);
+  const [view, setView] = useState(() => {
+    const recView = window.localStorage.getItem("countN");
+    return recView ? JSON.parse(recView) : 1;
+  });
   const [cat, setCat] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [favoritos, setFavoritos] = useState(() => {
@@ -14,7 +17,7 @@ function App() {
     return recFav ? JSON.parse(recFav) : [];
   });
 
-const fetchData = async () => {
+  const fetchData = async () => {
     try {
       const res = await fetch(api_url);
       const data = await res.json();
@@ -26,7 +29,7 @@ const fetchData = async () => {
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     fetchData();
     console.log("cat", cat);
   }, []);
@@ -70,15 +73,21 @@ const fetchData = async () => {
     }
     const newList = favoritos.filter((fav) => fav.favId !== favId);
     setFavoritos(newList);
+    window.localStorage.setItem("fav", JSON.stringify(newList));
   };
+  const mostView = () => {
+    const newView = view + 1;
+    setView(newView);
+    window.localStorage.setItem("countN", JSON.stringify(newView));
+  };
+
   //Retornamos y renderizamos
   return (
     <>
-     <section className="flex flex-col lg:flex-row justify-center items-center lg:items-start w-full min-h-screen bg-gray-950 p-6 gap-8">
-        
-            <main className="flex flex-col items-center gap-6 w-full lg:w-2/3" >
+      <section className="flex flex-col lg:flex-row justify-center items-center lg:items-start w-full min-h-screen bg-gray-950 p-6 gap-8">
+        <main className="flex flex-col items-center gap-6 w-full lg:w-2/3">
           <h1 className="font-bold text-2xl md:text-4xl text-white">MICHIS</h1>
-<div className="flex flex-col justify-center items-center gap-3 w-full lg:w-100 bg-gray-900 p-4 rounded-2xl" >
+          <div className="flex flex-col justify-center items-center gap-3 w-full lg:w-100 bg-gray-900 p-4 rounded-2xl">
             {isLoading && <p className="text-white">cargando michis...</p>}
             <img
               className="md:w-80 md:h-80 w-60 h-60  rounded-lg"
@@ -89,8 +98,8 @@ const fetchData = async () => {
               <button
                 className="flex items-center justify-center p-3 bg-blue-500  h-auto w-14 hover:bg-blue-900 rounded-lg text-white"
                 onClick={() => {
-                      fetchData();
-                      setView(view + 1);
+                  fetchData();
+                  mostView()
                 }}
               >
                 <ArrowPathIcon className="w-10 h-10" />
